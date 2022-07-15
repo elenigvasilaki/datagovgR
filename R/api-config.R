@@ -5,7 +5,7 @@
 #' @param token data.gov.gr API token
 #'
 #' @details
-#' Using \code{\link{set_token}} allows you to set your API token once and it is then used for
+#' Using \code{set_token} allows you to set your API token once and it is then used for
 #' all functions that access the API.
 #' See https://www.data.gov.gr/token to get your API token.
 #'
@@ -14,7 +14,7 @@
 #' @export
 #'
 #' @examples
-#' set_token(token abcd12344321)
+#' set_token("token abcd12344321")
 #'
 set_token <- function(token){
 
@@ -29,7 +29,6 @@ set_token <- function(token){
 #'
 #' Function to retrieve user token.
 #'
-#' @param gov_token Your API token
 #'
 #' @details
 #' Using \code{get_token} allows you to retrieve your API token.
@@ -48,9 +47,9 @@ get_token <- function(){
 }
 
 
+
 #' Setting User Agent
 #'
-#' @param ua User Agent
 #'
 #' @importFrom httr user_agent
 #'

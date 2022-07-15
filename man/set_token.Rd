@@ -16,11 +16,11 @@ None
 Function to set the default token for use with data.gov.gr API.
 }
 \details{
-Using \code{\link{set_token}} allows you to set your API token once and it is then used for
+Using \code{set_token} allows you to set your API token once and it is then used for
 all functions that access the API.
 See https://www.data.gov.gr/token to get your API token.
 }
 \examples{
-set_token(token abcd12344321)
+set_token("token abcd12344321")
 
 }

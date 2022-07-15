@@ -10,9 +10,6 @@ An object of class \code{request} of length 7.
 \usage{
 ua
 }
-\arguments{
-\item{ua}{User Agent}
-}
 \description{
 Setting User Agent
 }

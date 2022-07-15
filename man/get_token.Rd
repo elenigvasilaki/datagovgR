@@ -6,9 +6,6 @@
 \usage{
 get_token()
 }
-\arguments{
-\item{gov_token}{Your API token}
-}
 \value{
 String.
 }

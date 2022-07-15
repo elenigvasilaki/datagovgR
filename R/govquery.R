@@ -6,7 +6,6 @@
 #' @param start_date starting date to grab data from
 #' @param end_date ending date to grab data from
 #' @param gov_token data.gov.gr token
-#' @param ua User Agent
 #'
 #' @importFrom attempt stop_if
 #' @importFrom jsonlite fromJSON

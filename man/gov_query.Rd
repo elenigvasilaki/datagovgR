@@ -19,8 +19,6 @@ gov_query(
 \item{end_date}{ending date to grab data from}
 
 \item{gov_token}{data.gov.gr token}
-
-\item{ua}{User Agent}
 }
 \value{
 The result of the query in a dataframe format.
