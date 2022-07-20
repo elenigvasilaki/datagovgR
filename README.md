@@ -4,52 +4,90 @@
 # datagovgR
 
 <!-- badges: start -->
+
+[![Lifecycle:
+experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
+
 <!-- badges: end -->
 
-The goal of datagovgR is to …
+R wrapper package for the [data.gov.gr](https://www.data.gov.gr) API.
+
+The goal of datagovgR is to enable R users, data analysts, academics and
+students to work with the Greek open governmental data programmatically.
+By default, the package returns queries from the v1 API on
+<https://data.gov.gr/api/v1/>. *Unfortunately, no official documentation
+has come to my attention for this API.*
+
+The following endpoints are currently available through the package:
+
+-   **“mdg_emvolio”** Covid-19 Vaccination Statistics
 
 ## Installation
 
-You can install the development version of datagovgR from
-[GitHub](https://github.com/) with:
+You can install the development version of datagovgR using
+[devtools](https://github.com/r-lib/devtools "Devtools package") like
+so:
 
 ``` r
 # install.packages("devtools")
-devtools::install_github("hypnicjerk91/datagovgR")
+devtools::install_github(hypnicjerk91/datagovgR)
 ```
 
-## Example
+## What else do I need?
 
-This is a basic example which shows you how to solve a common problem:
+You will need an access token to retrieve records from data.gov.gr. You
+may request for your API token on <https://www.data.gov.gr/token>. After
+your request, check your email regularly for your data.gov.gr API token.
+
+## Setting up
+
+#### Telling datagovgR about your API token
+
+You have to set your token once for all your API calls to use with the
+package’s corresponding function.
+
+To set:
 
 ``` r
+set_token("token abcd12344321")
+```
+
+To retrieve your token (if needed):
+
+``` r
+get_token()
+```
+
+## ’GET’ting data
+
+This is a basic example which shows you how to query the API. You will
+have to set the endpoint/dataset you are going to call, start_date
+(optional) and end_date (optional).
+
+``` r
+install_github("hypnicjerk91/datagovgR")
 library(datagovgR)
-## basic example code
+data <- gov_query("mdg_emvolio","2022-07-04","2022-07-11")
+## basic example code using the Covid-19 Vaccination dataset
 ```
-
-What is special about using `README.Rmd` instead of just `README.md`?
-You can include R chunks like so:
 
 ``` r
-summary(cars)
-#>      speed           dist       
-#>  Min.   : 4.0   Min.   :  2.00  
-#>  1st Qu.:12.0   1st Qu.: 26.00  
-#>  Median :15.0   Median : 36.00  
-#>  Mean   :15.4   Mean   : 42.98  
-#>  3rd Qu.:19.0   3rd Qu.: 56.00  
-#>  Max.   :25.0   Max.   :120.00
+summary(data)
 ```
 
-You’ll still need to render `README.Rmd` regularly, to keep `README.md`
-up-to-date. `devtools::build_readme()` is handy for this. You could also
-use GitHub Actions to re-render `README.Rmd` every time you push. An
-example workflow can be found here:
-<https://github.com/r-lib/actions/tree/v1/examples>.
+## Related projects
 
-You can also embed plots, for example:
+-   [go-data-gov-gr-sdk](https://github.com/ppapapetrou76/go-data-gov-gr-sdk)
+    Go client to access the data.gov.gr API.
 
-<img src="man/figures/README-pressure-1.png" width="100%" />
+-   [pydatagovgr](https://github.com/ilias-ant/pydatagovgr) Python
+    client to access the data.gov.gr API.
 
-In that case, don’t forget to commit and push the resulting figure
-files, so they display on GitHub and CRAN.
+## License
+
+Distributed under the MIT License.
+
+## Acknowledgements
+
+All rights are reserved by the official <https://data.gov.gr> site, its
+developers, its maintainers and the Hellenic Government.
