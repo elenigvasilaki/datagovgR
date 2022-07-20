@@ -23,7 +23,3 @@ The following endpoints are currently available through the package:
 -   **"mdg_emvolio"** Covid-19 Vaccination Statistics
 
 You will need an access token to retrieve records from data.gov.gr. You may request for your API token on <https://www.data.gov.gr/token>. After your request, check your email regularly for your data.gov.gr API token.
-
-
-
-
