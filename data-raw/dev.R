@@ -44,5 +44,4 @@ usethis::use_package("curl")
 usethis::use_package("attempt")
 
 use_testthat()
-use_vignette("datagovgR")
 

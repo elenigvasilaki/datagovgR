@@ -16,10 +16,14 @@ knitr::opts_chunk$set(
 
 R wrapper package for the [data.gov.gr](https://www.data.gov.gr/) API.
 
-The goal of datagovgR is to enable R users, data analysts, academics and students to work with the Greek open governmental data programmatically. By default, the package returns queries from the v1 API on <https://data.gov.gr/api/v1/>. *Unfortunately, no official documentation has come to my attention for this API.*
+The goal of datagovgR is to enable R users, data analysts, academics and students to work with the Greek open governmental data programmatically. By default, the package returns queries from the v1 API on <https://data.gov.gr/api/v1/>.
 
 The following endpoints are currently available through the package:
 
 -   **"mdg_emvolio"** Covid-19 Vaccination Statistics
 
 You will need an access token to retrieve records from data.gov.gr. You may request for your API token on <https://www.data.gov.gr/token>. After your request, check your email regularly for your data.gov.gr API token.
+
+
+
+
