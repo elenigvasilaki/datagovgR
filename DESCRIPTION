@@ -1,13 +1,12 @@
 Package: datagovgR
-Title: What the Package Does (One Line, Title Case)
-Version: 0.0.0.9000
-Authors@R: 
-    person("First", "Last", , "first.last@example.com", role = c("aut", "cre"),
-           comment = c(ORCID = "YOUR-ORCID-ID"))
-Description: What the package does (one paragraph).
+Title: R wrapper for data.gov.gr API
+Version: 0.0.1
+Authors@R: person('Eleni', 'Vasilaki', email = 'eleni.gvasilaki@gmail.com', role = c('cre', 'aut'))
+Description: The goal of datagovgR is to enable R users, data analysts, academics and students to work with the Greek open governmental data programmatically using their favourite language, R.
 License: MIT + file LICENSE
 URL: https://github.com/hypnicjerk91/datagovgR
-BugReports: https://github.com/hypnicjerk91/datagovgR/issues
+BugReports: https://github.com/hypnicjerk91/datagovgR
+Encoding: UTF-8
 Imports: 
     attempt,
     curl,
@@ -18,7 +17,4 @@ Suggests:
     rmarkdown,
     testthat (>= 3.0.0)
 Config/testthat/edition: 3
-Encoding: UTF-8
-Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.2.0
 VignetteBuilder: knitr
