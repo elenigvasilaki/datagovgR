@@ -1,10 +1,9 @@
 
-
+library(qpdf)
 library(devtools)
 library(usethis)
 library(desc)
 library(roxygen2)
-library(qpdf)
 
 # Remove default DESC
 unlink("DESCRIPTION")
@@ -36,7 +35,7 @@ my_desc$write(file = "DESCRIPTION")
 
 # Use this
 usethis::use_mit_license("Eleni Vasilaki")
-usethis::use_lifecycle_badge("Experimental")
+devtools::use_lifecycle_badge("Experimental")
 
 usethis::use_package("httr")
 usethis::use_package("jsonlite")

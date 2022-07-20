@@ -12,6 +12,9 @@
 #' @importFrom httr GET
 #' @importFrom httr add_headers
 #' @importFrom httr content
+#' @importFrom httr RETRY
+#' @importFrom httr http_error
+#' @importFrom httr http_status
 #'
 #' @return The result of the query in a dataframe format.
 #'
@@ -37,11 +40,24 @@ gov_query <- function(dataset = NULL, start_date = NULL, end_date = NULL, gov_to
     check_internet()
 
     # Create the get request
+    tryCatch({
     res<-httr::GET(paste0(gov_url,"/query/",dataset,if(!is.null(start_date)){paste0("?date_from=",start_date)},if(!is.null(end_date)){paste0("&date_to=",end_date)}), add_headers("Authorization" = gov_token),ua)
 
     # Check the result
-    check_status(res)
+    #check_status(res)
+
+    if(http_error(res)) stop(http_status(res)$message)
+    }, error=function(e){
+         res<-httr::RETRY("GET", paste0(gov_url, "/query/", dataset , if(!is.null(start_date)){paste0("?date_from=", start_date)}, if(!is.null(end_date)){paste0("&date_to=",end_date)}),
+                                                                                                                add_headers("Authorization" = gov_token),
+                                                                                                                ua,
+                                                                                                                times = 3,
+                                                                                                                pause_base = 1,
+                                                                                                                pause_cap = 60,
+                                                                                                                pause_min = 1)
+    })
+    if(http_error(res)) stop("Error when calling the API: ", http_status(res)$message)
 
     # Get the content and return it as a data.frame
-    return(jsonlite::fromJSON( httr::content(res, as = "text", encoding = "UTF-8")))
+    return(jsonlite::fromJSON(httr::content(res, as = "text", encoding = "UTF-8")))
 }
