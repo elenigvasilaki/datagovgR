@@ -48,12 +48,4 @@ get_token <- function(){
 
 
 
-#' Setting User Agent
-#'
-#'
-#' @importFrom httr user_agent
-#'
-ua<-httr::user_agent("https://github.com/hypnicjerk91/datagovgR")
 
-#' Setting Base URL
-gov_url<-"https://data.gov.gr/api/v1"

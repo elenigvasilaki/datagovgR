@@ -11,3 +11,16 @@ check_status <- function(res){
                 msg = "The API returned an error")
 }
 
+#' Setting User Agent
+#'
+#' The user agent to include with the call to the API.
+#'
+#' @importFrom httr user_agent
+#'
+ua<-httr::user_agent("https://github.com/hypnicjerk91/datagovgR")
+
+#' Setting Base URL
+#'
+#' Base URL to use with the query to the API.
+#'
+gov_url<-"https://data.gov.gr/api/v1"
