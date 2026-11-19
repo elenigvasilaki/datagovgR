@@ -1,6 +1,6 @@
 Package: datagovgR
 Title: R wrapper for data.gov.gr API
-Version: 0.0.1
+Version: 0.0.2
 Authors@R: person('Eleni', 'Vasilaki', email = 'eleni.gvasilaki@gmail.com', role = c('cre', 'aut'))
 Description: The goal of datagovgR is to enable R users, data analysts, academics and students to work with the Greek open governmental data programmatically using their favourite language, R.
 License: MIT + file LICENSE
@@ -15,7 +15,8 @@ Imports:
 Suggests: 
     knitr,
     rmarkdown,
-    testthat (>= 3.0.0)
+    testthat (>= 3.0.0),
+    withr
 Config/testthat/edition: 3
 VignetteBuilder: knitr
 RoxygenNote: 7.2.1
