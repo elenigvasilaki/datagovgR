@@ -27,8 +27,8 @@ my_desc$set(Title = "R wrapper for data.gov.gr API")
 # The description of your package
 my_desc$set(Description = "The goal of datagovgR is to enable R users, data analysts, academics and students to work with the Greek open governmental data programmatically using their favourite language, R.")
 # The urls
-my_desc$set("URL", "https://github.com/hypnicjerk91/datagovgR")
-my_desc$set("BugReports", "https://github.com/hypnicjerk91/datagovgR")
+my_desc$set("URL", "https://github.com/elenigvasilaki/datagovgR")
+my_desc$set("BugReports", "https://github.com/elenigvasilaki/datagovgR")
 # Save everyting
 my_desc$write(file = "DESCRIPTION")
 
