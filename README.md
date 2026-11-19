@@ -30,7 +30,7 @@ so:
 
 ``` r
 # install.packages("devtools")
-devtools::install_github("hypnicjerk91/datagovgR")
+devtools::install_github("elenigvasilaki/datagovgR")
 ```
 
 ## What else do I need?
@@ -65,7 +65,7 @@ have to set the endpoint/dataset you are going to call, start_date
 (optional) and end_date (optional).
 
 ``` r
-install_github("hypnicjerk91/datagovgR")
+install_github("elenigvasilaki/datagovgR")
 library(datagovgR)
 data <- gov_query("mdg_emvolio","2022-07-04","2022-07-11")
 ## basic example code using the Covid-19 Vaccination dataset
