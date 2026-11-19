@@ -30,7 +30,7 @@ so:
 
 ``` r
 # install.packages("devtools")
-devtools::install_github(hypnicjerk91/datagovgR)
+devtools::install_github("hypnicjerk91/datagovgR")
 ```
 
 ## What else do I need?
