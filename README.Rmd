@@ -35,7 +35,7 @@ You can install the development version of datagovgR using [devtools](https://gi
 
 ``` r
 # install.packages("devtools")
-devtools::install_github(elenigvasilaki/datagovgR)
+devtools::install_github("elenigvasilaki/datagovgR")
 ```
 
 ## What else do I need?
