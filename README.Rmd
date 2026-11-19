@@ -1,90 +1,77 @@
 ---
-output: github_document
+title: "Getting started with datagovgR"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Getting started with datagovgR}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
 ---
-
-<!-- README.md is generated from README.Rmd. Please edit that file -->
 
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
-  fig.path = "man/figures/README-",
-  out.width = "100%"
+  eval = FALSE  # the API needs a personal token, so code is shown but not run
 )
 ```
 
-# datagovgR
+datagovgR is an R wrapper for the [data.gov.gr](https://www.data.gov.gr/) API. It lets R users, data analysts, academics and students work with Greek open government data programmatically. Queries go to the v1 API at <https://data.gov.gr/api/v1/>.
 
-<!-- badges: start -->
+Currently available endpoint:
 
-[![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
+-   **"mdg_emvolio"**: COVID-19 vaccination statistics
 
-<!-- badges: end -->
+## 1. Install and load
 
-R wrapper package for the [data.gov.gr](https://www.data.gov.gr) API.
-
-The goal of datagovgR is to enable R users, data analysts, academics and students to work with the Greek open governmental data programmatically. By default, the package returns queries from the v1 API on <https://data.gov.gr/api/v1/>. *Unfortunately, no official documentation has come to my attention for this API.*
-
-The following endpoints are currently available through the package:
-
--   **"mdg_emvolio"** Covid-19 Vaccination Statistics
-
-## Installation
-
-You can install the development version of datagovgR using [devtools](https://github.com/r-lib/devtools "Devtools package") like so:
-
-``` r
+```{r}
 # install.packages("devtools")
 devtools::install_github("elenigvasilaki/datagovgR")
+library(datagovgR)
 ```
 
-## What else do I need?
+## 2. Get and set your API token
 
-You will need an access token to retrieve records from data.gov.gr. You may request for your API token on <https://www.data.gov.gr/token>. After your request, check your email regularly for your data.gov.gr API token.
+You need a personal access token, which you can request at <https://www.data.gov.gr/token>. It is sent by email.
 
-## Setting up
+Set it once per session; every query then uses it automatically:
 
-#### Telling datagovgR about your API token
-
-You have to set your token once for all your API calls to use with the package's corresponding function.
-
-To set:
-
-``` r
+```{r}
 set_token("token abcd12344321")
-```
 
-To retrieve your token (if needed):
-
-``` r
+# check which token is set
 get_token()
 ```
 
-## 'GET'ting data
+To avoid writing the token in your scripts, keep it in your `.Renviron` file (for example `DATAGOVGR_TOKEN=token abcd12344321`) and read it from there:
 
-This is a basic example which shows you how to query the API. You will have to set the endpoint/dataset you are going to call, start_date (optional) and end_date (optional).
-
-```{r example, eval=FALSE, include=TRUE}
-install_github("elenigvasilaki/datagovgR")
-library(datagovgR)
-data <- gov_query("mdg_emvolio","2022-07-04","2022-07-11")
-## basic example code using the Covid-19 Vaccination dataset
+```{r}
+set_token(Sys.getenv("DATAGOVGR_TOKEN"))
 ```
 
-```{r vaccinations, eval=FALSE, include=TRUE}
-summary(data)
+## 3. Query a dataset
+
+`gov_query()` takes the dataset name and, optionally, a start and an end date (`"YYYY-MM-DD"`):
+
+```{r}
+vacc <- gov_query("mdg_emvolio", start_date = "2022-07-04", end_date = "2022-07-11")
 ```
 
-## Related projects
+Either date can be left out. Without dates, the API decides which records it returns:
 
--   [go-data-gov-gr-sdk](https://github.com/ppapapetrou76/go-data-gov-gr-sdk) Go client to access the data.gov.gr API.
+```{r}
+recent <- gov_query("mdg_emvolio", start_date = "2022-07-01")
+```
 
--   [pydatagovgr](https://github.com/ilias-ant/pydatagovgr) Python client to access the data.gov.gr API.
+The result is a data frame:
 
-## License
+```{r}
+str(vacc)
+head(vacc)
+```
 
-Distributed under the MIT License.
+## 4. What happens when something goes wrong
 
-## Acknowledgements
-
-All rights are reserved by the official <https://data.gov.gr> site, its developers, its maintainers and the Hellenic Government.
+-   No token set: `gov_query()` stops and tells you to use `set_token()`.
+-   No dataset given: it stops and asks for a dataset name.
+-   No internet connection: it stops with a message to check your connection.
+-   Temporary server errors: the request is retried up to three times before giving up. Errors such as an invalid token (401/403) or an unknown dataset (404) stop immediately.
