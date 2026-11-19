@@ -11,7 +11,7 @@ check_internet <- function(){
 #'
 #' @importFrom httr user_agent
 #'
-ua<-httr::user_agent("https://github.com/hypnicjerk91/datagovgR")
+ua<-httr::user_agent("https://github.com/elenigvasilaki/datagovgR")
 
 #' Setting Base URL
 #'
