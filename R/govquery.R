@@ -39,25 +39,31 @@ gov_query <- function(dataset = NULL, start_date = NULL, end_date = NULL, gov_to
     # Check for internet
     check_internet()
 
-    # Create the get request
-    tryCatch({
-    res<-httr::GET(paste0(gov_url,"/query/",dataset,if(!is.null(start_date)){paste0("?date_from=",start_date)},if(!is.null(end_date)){paste0("&date_to=",end_date)}), add_headers("Authorization" = gov_token),ua)
+    # Create the get request; RETRY tries up to 3 times on failure
+    res <- httr::RETRY("GET", build_query_url(dataset, start_date, end_date),
+                       add_headers("Authorization" = gov_token),
+                       ua,
+                       times = 3,
+                       pause_base = 1,
+                       pause_cap = 60,
+                       pause_min = 1,
+                       terminate_on = c(400, 401, 403, 404))
 
-    # Check the result
-    #check_status(res)
-
-    if(http_error(res)) stop(http_status(res)$message)
-    }, error=function(e){
-         res<-httr::RETRY("GET", paste0(gov_url, "/query/", dataset , if(!is.null(start_date)){paste0("?date_from=", start_date)}, if(!is.null(end_date)){paste0("&date_to=",end_date)}),
-                                                                                                                add_headers("Authorization" = gov_token),
-                                                                                                                ua,
-                                                                                                                times = 3,
-                                                                                                                pause_base = 1,
-                                                                                                                pause_cap = 60,
-                                                                                                                pause_min = 1)
-    })
     if(http_error(res)) stop("Error when calling the API: ", http_status(res)$message)
 
     # Get the content and return it as a data.frame
     return(jsonlite::fromJSON(httr::content(res, as = "text", encoding = "UTF-8")))
+}
+
+#' Build the query URL
+#'
+#' Internal helper: puts the dataset and optional dates into a valid URL.
+#'
+#' @noRd
+build_query_url <- function(dataset, start_date = NULL, end_date = NULL){
+    query <- list(date_from = start_date, date_to = end_date)
+    query <- query[!vapply(query, is.null, logical(1))]
+    url <- paste0(gov_url, "/query/", dataset)
+    if (length(query) == 0) return(url)
+    httr::modify_url(url, query = query)
 }
