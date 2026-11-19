@@ -1,8 +1,8 @@
 ---
-title: "datagovgR"
+title: "Getting started with datagovgR"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{datagovgR}
+  %\VignetteIndexEntry{Getting started with datagovgR}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -10,16 +10,68 @@ vignette: >
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
-  comment = "#>"
+  comment = "#>",
+  eval = FALSE  # the API needs a personal token, so code is shown but not run
 )
 ```
 
-R wrapper package for the [data.gov.gr](https://www.data.gov.gr/) API.
+datagovgR is an R wrapper for the [data.gov.gr](https://www.data.gov.gr/) API. It lets R users, data analysts, academics and students work with Greek open government data programmatically. Queries go to the v1 API at <https://data.gov.gr/api/v1/>.
 
-The goal of datagovgR is to enable R users, data analysts, academics and students to work with the Greek open governmental data programmatically. By default, the package returns queries from the v1 API on <https://data.gov.gr/api/v1/>.
+Currently available endpoint:
 
-The following endpoints are currently available through the package:
+-   **"mdg_emvolio"**: COVID-19 vaccination statistics
 
--   **"mdg_emvolio"** Covid-19 Vaccination Statistics
+## 1. Install and load
 
-You will need an access token to retrieve records from data.gov.gr. You may request for your API token on <https://www.data.gov.gr/token>. After your request, check your email regularly for your data.gov.gr API token.
+```{r}
+# install.packages("devtools")
+devtools::install_github("elenigvasilaki/datagovgR")
+library(datagovgR)
+```
+
+## 2. Get and set your API token
+
+You need a personal access token, which you can request at <https://www.data.gov.gr/token>. It is sent by email.
+
+Set it once per session; every query then uses it automatically:
+
+```{r}
+set_token("token abcd12344321")
+
+# check which token is set
+get_token()
+```
+
+To avoid writing the token in your scripts, keep it in your `.Renviron` file (for example `DATAGOVGR_TOKEN=token abcd12344321`) and read it from there:
+
+```{r}
+set_token(Sys.getenv("DATAGOVGR_TOKEN"))
+```
+
+## 3. Query a dataset
+
+`gov_query()` takes the dataset name and, optionally, a start and an end date (`"YYYY-MM-DD"`):
+
+```{r}
+vacc <- gov_query("mdg_emvolio", start_date = "2022-07-04", end_date = "2022-07-11")
+```
+
+Either date can be left out. Without dates, the API decides which records it returns:
+
+```{r}
+recent <- gov_query("mdg_emvolio", start_date = "2022-07-01")
+```
+
+The result is a data frame:
+
+```{r}
+str(vacc)
+head(vacc)
+```
+
+## 4. What happens when something goes wrong
+
+-   No token set: `gov_query()` stops and tells you to use `set_token()`.
+-   No dataset given: it stops and asks for a dataset name.
+-   No internet connection: it stops with a message to check your connection.
+-   Temporary server errors: the request is retried up to three times before giving up. Errors such as an invalid token (401/403) or an unknown dataset (404) stop immediately.
