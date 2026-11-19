@@ -65,7 +65,7 @@ get_token()
 This is a basic example which shows you how to query the API. You will have to set the endpoint/dataset you are going to call, start_date (optional) and end_date (optional).
 
 ```{r example, eval=FALSE, include=TRUE}
-install_github("hypnicjerk91/datagovgR")
+install_github("elenigvasilaki/datagovgR")
 library(datagovgR)
 data <- gov_query("mdg_emvolio","2022-07-04","2022-07-11")
 ## basic example code using the Covid-19 Vaccination dataset
